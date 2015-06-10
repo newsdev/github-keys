@@ -13,6 +13,8 @@ s3_bucket = ARGV[1]
 raise 'you must specify an s3 key!' if ARGV.length < 3
 s3_key = ARGV[2]
 
+s3 = Aws::S3::Client.new(region: ENV['AWS_REGION'] || 'us-east-1')
+
 while true do
   keys = []
 
@@ -34,7 +36,7 @@ while true do
     content_type: 'text/plain'
   }
 
-  Aws::S3::Client.new(region: ENV['AWS_REGION'] || 'us-east-1').put_object(obj)
+  s3.put_object(obj)
   puts '✓'
   sleep(10)
 end
